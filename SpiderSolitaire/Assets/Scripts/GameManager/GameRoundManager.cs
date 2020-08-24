@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 
 /// <summary>
@@ -19,6 +20,12 @@ public class GameRoundManager : Singleton<GameRoundManager>
     /// </summary>
     private List<int> _lastSolitaires;
 
+    public event Action _Onstart;
+
+
+    private const string _objUrl= "Prefabs/GameRound"; 
+
+
     public void Init()
     {
         _colSolitaires = new Dictionary<int, List<int>>();
@@ -29,13 +36,20 @@ public class GameRoundManager : Singleton<GameRoundManager>
         }
 
         _lastSolitaires = new List<int>();
-
-        UIManager.Instance.CreateCard(SolitaireDB.Instance.GetSolitaireByIdx(5));
-
     }
 
+    /// <summary>
+    /// 现在我们开始一局游戏
+    /// </summary>
+    public void StartGame()
+    {
+        _Onstart?.Invoke();
+    }
 
-
+    public static GameObject GetPrefabs()
+    {
+        return Resources.Load<GameObject>(_objUrl);
+    }
 
 
 }

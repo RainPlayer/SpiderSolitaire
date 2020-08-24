@@ -15,9 +15,6 @@ public enum GameManagerLifeCircle
     /// 初始化
     /// </summary>
     Init,
-
-
-
 }
 
 public class GameManager : MonoSingleton<GameManager>
@@ -25,15 +22,18 @@ public class GameManager : MonoSingleton<GameManager>
     // Start is called before the first frame update
     void Start()
     {
-        ///初始化数据
+
         SolitaireDB.Instance.Init();
 
+        ///初始化游戏
+        GameRoundManager.Instance.Init();
 
         ///初始化ui
         UIManager.Instance.Init();
 
-        GameRoundManager.Instance.Init();
+        UIManager.Instance.RegistEvent();
+
+        GameRoundManager.Instance.StartGame();
     }
 
-   
 }

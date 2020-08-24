@@ -45,7 +45,7 @@ public class Solitaire
 
     private SolitaireColor _color;
 
-    private static string _objUrl = "Prefabs/Card";
+    private const string _objUrl = "Prefabs/Card";
 
     private static GameObject _obj;
 

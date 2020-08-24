@@ -41,25 +41,27 @@ public class UIManager : Singleton<UIManager>
         transform = go.transform;
     }
 
+    /// <summary>
+    /// 注册和自身相关事件
+    /// </summary>
+    public void RegistEvent()
+    {
+        GameRoundManager.Instance._Onstart += CreateGameRoundUI;
+    }
+
+    public void CreateGameRoundUI()
+    {
+        GameObject go = GameObject.Instantiate(GameRoundManager.GetPrefabs());
+
+        UI_GameRound rd = new UI_GameRound(go.transform);
+
+        CreateViewOnRoot(go);
+    }
+
+
     public void CreateCard(Solitaire so)
     {
-        GameObject go= GameObject.Instantiate(Solitaire.GetPrefabs());
 
-        go.transform.SetParent(transform.GetChild(1));
-
-        Transform trs = go.transform;
-
-        trs.localPosition = Vector2.zero;
-
-        trs.localScale = Vector2.one;
-
-        trs.Find("bg").GetComponent<Image>().color = so.GetColor().GetColorBySolitaireColor();
-
-        Transform t = trs.Find("bg").Find("Text");
-
-        TextMeshProUGUI tm = t.GetComponent<TextMeshProUGUI>();
-
-        tm.text = "" + (int)so.GetLevel();
     }
 
 
@@ -67,7 +69,10 @@ public class UIManager : Singleton<UIManager>
     public void CreateViewOnRoot(GameObject go, float destroyDelay = -1, UICreateRoot root = UICreateRoot.Default)
     {
         go.transform.SetParent(transform.GetChild((int)root));
+       
+        go.transform.localScale = Vector2.one;
 
         go.transform.localPosition = Vector2.zero;
+
     }
 }
