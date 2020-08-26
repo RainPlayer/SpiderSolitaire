@@ -18,9 +18,17 @@ public class GameRoundManager : Singleton<GameRoundManager>
     /// <summary>
     /// 剩下的卡牌数据
     /// </summary>
-    private List<int> _lastSolitaires;
+    private int[] _lastSolitaires;
 
-    public event Action _Onstart;
+    /// <summary>
+    /// 当游戏开始
+    /// </summary>
+    public event Action Onstart;
+
+    /// <summary>
+    /// 当剩下的卡牌数量发生变化,因为剩下的卡牌发生变化一定是发牌，所以这里只写一个事件
+    /// </summary>
+    public event Action<int> OnDealCard;
 
 
     private const string _objUrl= "Prefabs/GameRound"; 
@@ -35,15 +43,51 @@ public class GameRoundManager : Singleton<GameRoundManager>
             _colSolitaires.Add(i, new List<int>());
         }
 
-        _lastSolitaires = new List<int>();
+        int num = SolitaireDB.Instance.GetSolitaireCount();
+
+        _lastSolitaires = new int[num];
+
+        for (int i = 0; i < num; i++)
+        {
+            _lastSolitaires[i] = num;
+        }
+
     }
+
+    /// <summary>
+    /// 发牌
+    /// </summary>
+    public void DealCard()
+    {
+
+    }
+
+    /// <summary>
+    /// 洗牌
+    /// </summary>
+    public void ShuffleCard()
+    {
+        for (int i = 0; i < _lastSolitaires.Length; i++)
+        {
+            int random = UnityEngine.Random.Range(i, _lastSolitaires.Length);
+
+            int temp = _lastSolitaires[i];
+
+            _lastSolitaires[i] = _lastSolitaires[random];
+
+            _lastSolitaires[random] = temp;
+        }
+    }
+
+
+
 
     /// <summary>
     /// 现在我们开始一局游戏
     /// </summary>
     public void StartGame()
     {
-        _Onstart?.Invoke();
+        Onstart?.Invoke();
     }
 
     public static GameObject GetPrefabs()

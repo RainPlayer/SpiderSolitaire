@@ -46,7 +46,7 @@ public class UIManager : Singleton<UIManager>
     /// </summary>
     public void RegistEvent()
     {
-        GameRoundManager.Instance._Onstart += CreateGameRoundUI;
+        GameRoundManager.Instance.Onstart += CreateGameRoundUI;
     }
 
     public void CreateGameRoundUI()
@@ -59,20 +59,18 @@ public class UIManager : Singleton<UIManager>
     }
 
 
-    public void CreateCard(Solitaire so)
-    {
-
-    }
-
-
-
+  
     public void CreateViewOnRoot(GameObject go, float destroyDelay = -1, UICreateRoot root = UICreateRoot.Default)
     {
-        go.transform.SetParent(transform.GetChild((int)root));
+        Transform parent = transform.GetChild((int)root);
+
+        go.transform.SetParent(parent);
        
         go.transform.localScale = Vector2.one;
 
         go.transform.localPosition = Vector2.zero;
+
+        go.GetComponent<RectTransform>().sizeDelta = parent.GetComponent<RectTransform>().sizeDelta;
 
     }
 }

@@ -36,4 +36,10 @@ public class SolitaireDB : Singleton<SolitaireDB>
         return _data[idx];
     }
 
+    public int GetSolitaireCount()
+    {
+        return _data.Count;
+    }
+
+
 }
