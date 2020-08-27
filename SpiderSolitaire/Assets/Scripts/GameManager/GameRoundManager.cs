@@ -18,7 +18,7 @@ public class GameRoundManager : Singleton<GameRoundManager>
     /// <summary>
     /// 剩下的卡牌数据
     /// </summary>
-    private int[] _lastSolitaires;
+    private List<int> _lastSolitaires;
 
     /// <summary>
     /// 当游戏开始
@@ -29,10 +29,6 @@ public class GameRoundManager : Singleton<GameRoundManager>
     /// 当剩下的卡牌数量发生变化,因为剩下的卡牌发生变化一定是发牌，所以这里只写一个事件
     /// </summary>
     public event Action<int> OnDealCard;
-
-
-    private const string _objUrl= "Prefabs/GameRound"; 
-
 
     public void Init()
     {
@@ -45,31 +41,44 @@ public class GameRoundManager : Singleton<GameRoundManager>
 
         int num = SolitaireDB.Instance.GetSolitaireCount();
 
-        _lastSolitaires = new int[num];
+        _lastSolitaires = new List<int>();
 
         for (int i = 0; i < num; i++)
         {
-            _lastSolitaires[i] = num;
+            _lastSolitaires.Add(num);
         }
 
+        StartGame();
     }
 
     /// <summary>
-    /// 发牌
+    /// 获取下一张卡牌
     /// </summary>
-    public void DealCard()
+    /// <returns></returns>
+    public Solitaire GetNextSolitaire()
     {
-
+        return SolitaireDB.Instance.GetSolitaireByIdx(_lastSolitaires[0]);
     }
 
+    /// <summary>
+    /// 获取剩下的卡片数量
+    /// </summary>
+    /// <returns></returns>
+    public int GetLastSolitaireCount()
+    {
+        return _lastSolitaires.Count/ColNum;
+    }
+
+
+ 
     /// <summary>
     /// 洗牌
     /// </summary>
     public void ShuffleCard()
     {
-        for (int i = 0; i < _lastSolitaires.Length; i++)
+        for (int i = 0; i < _lastSolitaires.Count; i++)
         {
-            int random = UnityEngine.Random.Range(i, _lastSolitaires.Length);
+            int random = UnityEngine.Random.Range(i, _lastSolitaires.Count);
 
             int temp = _lastSolitaires[i];
 
@@ -87,13 +96,7 @@ public class GameRoundManager : Singleton<GameRoundManager>
     /// </summary>
     public void StartGame()
     {
-        Onstart?.Invoke();
+        ShuffleCard();
+        //Onstart?.Invoke();
     }
-
-    public static GameObject GetPrefabs()
-    {
-        return Resources.Load<GameObject>(_objUrl);
-    }
-
-
 }

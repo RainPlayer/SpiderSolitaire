@@ -22,18 +22,17 @@ public class GameManager : MonoSingleton<GameManager>
     // Start is called before the first frame update
     void Start()
     {
-
         SolitaireDB.Instance.Init();
 
         ///初始化游戏
-        GameRoundManager.Instance.Init();
+        //GameRoundManager.Instance.Init();
 
         ///初始化ui
         UIManager.Instance.Init();
 
-        UIManager.Instance.RegistEvent();
+        //UIManager.Instance.RegistEvent();
 
-        GameRoundManager.Instance.StartGame();
+        //GameRoundManager.Instance.StartGame();
     }
 
 }

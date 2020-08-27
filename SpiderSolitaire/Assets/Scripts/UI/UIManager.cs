@@ -24,21 +24,21 @@ public enum UICreateRoot
     Window = 3
 }
 
-public class UIManager : Singleton<UIManager>
+public class UIManager : MonoSingleton<UIManager>
 {
-    public Transform transform;
-
     private const string _objUrl = "Prefabs/UIManager";
 
-    public void Init()
+    public new void Init()
     {
-        GameObject go = GameObject.Instantiate(Resources.Load<GameObject>(_objUrl));
+        transform.GetComponentInChildren<UI_GameRound>().StartGame();
 
-        go.transform.localPosition = Vector2.zero;
+        //GameObject go = GameObject.Instantiate(Resources.Load<GameObject>(_objUrl));
 
-        go.GetComponent<Canvas>().worldCamera = Camera.main;
+        //go.transform.localPosition = Vector2.zero;
 
-        transform = go.transform;
+        //go.GetComponent<Canvas>().worldCamera = Camera.main;
+
+        //transform = go.transform;
     }
 
     /// <summary>
@@ -51,11 +51,11 @@ public class UIManager : Singleton<UIManager>
 
     public void CreateGameRoundUI()
     {
-        GameObject go = GameObject.Instantiate(GameRoundManager.GetPrefabs());
+        //GameObject go = GameObject.Instantiate(UI_GameRound);
 
-        UI_GameRound rd = new UI_GameRound(go.transform);
+        //UI_GameRound rd = new UI_GameRound(go.transform);
 
-        CreateViewOnRoot(go);
+        //CreateViewOnRoot(go);
     }
 
 

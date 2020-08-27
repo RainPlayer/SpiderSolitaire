@@ -45,10 +45,6 @@ public class Solitaire
 
     private SolitaireColor _color;
 
-    private const string _objUrl = "Prefabs/Card";
-
-    private static GameObject _obj;
-
     public int GetIdx()
     {
         return _idx;
@@ -87,20 +83,6 @@ public class Solitaire
 
         return false;
     }
-
-    public static GameObject GetPrefabs()
-    {
-        if (_obj==null)
-        {
-            _obj = Resources.Load<GameObject>(_objUrl);
-        }
-
-        return _obj;
-    }
-
-    
-
-
 
 }
 
